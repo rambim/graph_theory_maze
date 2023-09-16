@@ -12,7 +12,7 @@ Uma vez entendido o labirinto, você deve sugerir a sequência de movimentos oti
 
 O labirinto é representado por um grafo onde cada vértice é um ponto que pode ser visitado pelo usuário. Para ajudá-lo a entender e navegar pelo labirinto, você terá acesso a uma API com três endpoints:
 
-### /iniciar
+### /iniciar:
 
 Permite ao usuário iniciar a exploração do labirinto.
 
