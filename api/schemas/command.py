@@ -12,13 +12,3 @@ class MoveCommand (Command):
 
 class ValidatePathCommand (Command):
   todos_movimentos: list [int]
-
-class Position (BaseModel):
-  pos_atual: int
-  inicio: bool
-  final: bool
-  movimentos: list [int]
-
-class ValidatePathResponse (BaseModel):
-  caminho_valido: bool
-  quantidade_movimentos: int
