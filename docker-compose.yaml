@@ -1,0 +1,21 @@
+services:
+  redis:
+    image: redislabs/redisgraph:2.12.9
+    networks:
+      - gtm-network
+    expose:
+      - "6379"
+    
+  api:
+    build: .
+    ports:
+      - "9300:9300"
+    networks:
+      - gtm-network
+
+    environment:
+      - GTM_REDIS_HOST=redis
+
+networks:
+  gtm-network:
+    name: gtm-network
