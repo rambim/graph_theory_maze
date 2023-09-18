@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
-from schemas.command import StartCommand, MoveCommand
-from schemas.position import Position
-from services.graph_service import GraphService
-from services.session_service import SessionService
+
+from api.schemas.command import StartCommand
+from api.schemas.position import Position
+from api.services.graph_service import GraphService
+from api.services.session_service import SessionService
 
 command_routes = APIRouter ()
 

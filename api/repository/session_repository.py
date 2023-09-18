@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from redis import Redis
 from fastapi import Depends
 
-from schemas.position import Position
-from db.redis_client import get_redis_client
+from api.schemas.position import Position
+from api.db.redis_client import get_redis_client
 
 class ISessionRepository (ABC):
 

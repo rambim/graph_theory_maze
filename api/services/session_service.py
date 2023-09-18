@@ -1,7 +1,8 @@
-from repository.session_repository import ISessionRepository, RedisSessionRespositoryImpl
-from config.config import Config
-
 from fastapi import Depends
+
+from api.repository.session_repository import ISessionRepository, RedisSessionRespositoryImpl
+from api.config.config import Config
+
 
 class SessionService:
 

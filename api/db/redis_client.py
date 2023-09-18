@@ -1,5 +1,5 @@
 from redis import Redis
-from config.config import Config
+from api.config.config import Config
 import os
 
 _redis_client = None

@@ -1,9 +1,10 @@
-from repository.graph_repository import IGraphRepository, RedisGraphRespoistoryImpl
-from schemas.position import Position
-from redisgraph import Node
-from config.config import Config
-
 from fastapi import Depends
+from redisgraph import Node
+
+from api.repository.graph_repository import IGraphRepository, RedisGraphRespoistoryImpl
+from api.schemas.position import Position
+from api.config.config import Config
+
 
 class GraphService:
   def __init__ (self,
