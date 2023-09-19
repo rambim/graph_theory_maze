@@ -71,10 +71,8 @@ class RedisGraphRespoistoryImpl (IGraphRepository):
 
     nodes: Node = [node [0] for node in result.result_set]
 
-    # node_ids: list [int] = [node.properties ['node_id'] for node in nodes]
-    # node_ids.sort ()
-
     return nodes
     
-
+  def list_all_graphs (self) -> list [str]:
+    return self.redis_client.execute_command ('graph.list')
 

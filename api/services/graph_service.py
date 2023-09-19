@@ -26,6 +26,5 @@ class GraphService:
       movimentos = sorted ([int (node.properties ['node_id']) for node in neighbors])
     )
 
-
-
-
+  def list_all_graphs (self) -> list [str]:
+    return [maze.decode ('utf-8') for maze in self.graph_repository.list_all_graphs ()]

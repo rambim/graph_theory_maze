@@ -20,6 +20,9 @@ async def start_maze (
   return start_position
 
 
+@command_routes.get ("/labirintos")
+async def list_mazes (graph_service: GraphService = Depends (GraphService)) -> list [str]:
+  return graph_service.list_all_graphs ()
 
 
 # @router.post ("/movimentar")
