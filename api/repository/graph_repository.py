@@ -37,8 +37,6 @@ class RedisGraphRespoistoryImpl (IGraphRepository):
 
     node: Node = result.result_set [0][0]
 
-    # return node.properties ['node_id']
-
     return node
 
 
@@ -54,7 +52,6 @@ class RedisGraphRespoistoryImpl (IGraphRepository):
 
     node: Node = result.result_set [0][0]
 
-    # return node.properties ['node_id']
     return node
 
   def get_neighbors_nodes (self, maze_id: str, actual_position: int) -> list[Node]:
