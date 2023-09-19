@@ -23,48 +23,26 @@ class MazeLoader:
 
     with open (maze_file_path, 'r') as file:
       for line in file:
-        n1, n2, p = '', '', ''
-        node01: Node = None
-        node02: Node = None
-        edge: Edge = None
+        n1, n2 = '', ''
 
-        try:
-          n1, n2 = line.split (':')
-        except:
-          n1, n2, p = line.split (':')
-        
-        node01 = Node (
-          node_id = int (n1.strip ()),
-          label = 'node',
-          properties = {
-          'is_end': False,
-          'is_start': False,
-          'node_id': int (n1.strip ())
-          }
-        )
+        n1, n2 = line.split (':')
 
-        node02 = Node (
-          node_id = int (n2.strip ()),
-          label = 'node',
-          properties = {
-            'is_end': p.strip () == 'end',
-            'is_start': p.strip () == 'start',
-            'node_id': int (n2.strip ())
-          }
-        )
+        if n1.strip () == 'start':
+          graph.query (
+            f'match (n1:node {{node_id: {int (n2.strip ())}}}) set n1.is_start = true'
+          )
 
-        graph.add_node (node01)
-        graph.add_node (node02)
+        elif n1.strip () == 'end':
+          graph.query (
+            f'match (n1:node {{node_id: {int (n2.strip ())}}}) set n1.is_end = true'
+          )
 
-        edge = Edge (
-          src_node = node01,
-          relation = 'connects',
-          dest_node = node02
-        )
+        else:
+          graph.query (
+            f'merge (n1:node {{is_end: false, is_start: false, node_id: {int (n1.strip ())}}}) merge (n2:node {{is_end: false, is_start: false, node_id: {int (n2.strip ())}}}) create (n1) -[:connects]-> (n2)'
+          )
 
-        graph.add_edge (edge = edge)
 
-    graph.commit ()
 
 
 if __name__ == '__main__':

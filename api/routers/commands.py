@@ -7,13 +7,14 @@ from api.services.session_service import SessionService
 
 command_routes = APIRouter ()
 
-@command_routes.post ("/iniciar", status_code = 200)
+@command_routes.post ("/iniciar")
 async def start_maze (
   start_command: StartCommand,
   session_service: SessionService = Depends (SessionService),
   graph_service: GraphService = Depends (GraphService)
   ) -> Position:
 
+  graph_service.verify_maze_exists (start_command.labirinto)
   session_service.create_session (start_command.id, start_command.labirinto)
 
   start_position = graph_service.get_start_position (start_command.labirinto)
@@ -31,6 +32,7 @@ async def move (
   graph_service: GraphService = Depends (GraphService)
 ) -> Position:
 
+  graph_service.verify_maze_exists (move_command.labirinto)
   actual_position_number: int = session_service.get_actual_position_number_by_session_id (move_command.id, move_command.labirinto)
 
   if graph_service.is_legal_move (move_command.labirinto, actual_position_number, move_command.nova_posicao):

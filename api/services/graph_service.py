@@ -15,9 +15,6 @@ class GraphService:
     self.app_config = app_config
 
   def get_start_position (self, maze_id: str) -> Position:
-    mazes = self.list_all_mazes ()
-
-    if maze_id not in mazes: raise HTTPException (status_code = 404, detail = 'Labirinto não encontrado.')
 
     start_node: Node = self.graph_repository.get_start_node (maze_id = maze_id)
 
@@ -34,6 +31,12 @@ class GraphService:
     node: Node = self.graph_repository.get_node_by_node_number (actual_position_number, maze_id)
     neighbors_list: list [int] = self.__get_neighbors_list (maze_id, node.properties ['node_id'])
 
+    print (type (node.properties ['is_start']))
+    print (node.properties ['is_start'])
+    
+    print (type (node.properties ['is_end']))
+    print (node.properties ['is_end'])
+
     return Position (
       pos_atual = actual_position_number,
       inicio = node.properties ['is_start'],
@@ -49,6 +52,11 @@ class GraphService:
     neighbors_list = self.__get_neighbors_list (maze_id, actual_position_number)
 
     return True if new_position in neighbors_list else False
+
+  def verify_maze_exists (self, maze_id: str):
+    mazes = self.list_all_mazes ()
+
+    if maze_id not in mazes: raise HTTPException (status_code = 404, detail = 'Labirinto não encontrado.')
 
   def __get_neighbors_list (self, maze_id: str, actual_position_number: int) -> list [int]:
     actual_position_number = int (actual_position_number)

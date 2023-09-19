@@ -26,8 +26,6 @@ class SessionService:
     
     session_data: dict = self.session_repository.get_session_by_id (session_id = session_id, maze_id = maze_id)
 
-    print (session_data)
-
     if session_data == {} or session_data is None: raise HTTPException (status_code = 404, detail = 'ID não encontrado ou expirado!')
     
     return int (session_data ['actual_position'])
