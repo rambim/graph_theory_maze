@@ -23,7 +23,7 @@ class GraphService:
       pos_atual = start_position.properties ['node_id'],
       inicio = start_position.properties ['is_start'],
       final = start_position.properties ['is_end'],
-      movimentos = sorted ([node.properties ['node_id'] for node in  neighbors])
+      movimentos = sorted ([int (node.properties ['node_id']) for node in neighbors])
     )
 
 
