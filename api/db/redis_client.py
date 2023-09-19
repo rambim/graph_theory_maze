@@ -12,7 +12,8 @@ def get_redis_client () -> Redis:
   if _redis_client is None:
     _redis_client = Redis (
       host = config.GTM_REDIS_HOST,
-      port = config.GTM_REDIS_PORT
+      port = config.GTM_REDIS_PORT,
+      decode_responses = True
     )
 
   return _redis_client

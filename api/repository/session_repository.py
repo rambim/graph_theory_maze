@@ -8,15 +8,15 @@ from api.db.redis_client import get_redis_client
 class ISessionRepository (ABC):
 
   @abstractmethod
-  def get_session_by_id (self, id: str) -> str:
+  def get_session_by_id (self, id: str) -> dict:
     raise NotImplemented ()
 
   @abstractmethod
-  def create_session (self, id: str) -> str:
+  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int) -> str:
     raise NotImplemented ()
 
   @abstractmethod
-  def update_actual_node (self, id: str, actual_node: int) -> int:
+  def update_actual_node (self, session_id: str, maze_id: str, new_position: int) -> int:
     raise NotImplemented ()
 
 
@@ -25,19 +25,32 @@ class RedisSessionRespositoryImpl (ISessionRepository):
   def __init__ (self, redis_client: Redis = Depends (get_redis_client)):
     self.redis_client = redis_client
 
-  def get_session_by_id(self, id: str) -> str:
-    return super().get_session_by_id(id)
+  def get_session_by_id (self, session_id: str, maze_id: str) -> dict:
+    return self.redis_client.hgetall (
+      session_id + maze_id
+    )
 
-  def update_actual_node(self, id: str, actual_node: int) -> int:
-    return super().update_actual_node(id, actual_node)
+  def update_actual_node (self, session_id: str, maze_id: str, new_position: int) -> int:
+    key = session_id + maze_id
 
-  def create_session (self, session_id: str, maze_id: str, session_ttl: int) -> str:
+    self.redis_client.hset (
+      name = key,
+      key = 'actual_position',
+      value = new_position
+    )
+
+    return int (self.redis_client.hget (
+      name = key,
+      key = 'actual_position'
+    ))
+
+  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int) -> str:
     key: str = session_id + maze_id
 
     self.redis_client.hset (
       name = key,
       mapping = {
-        'actual_position': 1
+        'actual_position': actual_position
       }
     )
 

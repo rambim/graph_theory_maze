@@ -34,20 +34,22 @@ class MazeLoader:
           n1, n2, p = line.split (':')
         
         node01 = Node (
+          node_id = int (n1.strip ()),
           label = 'node',
           properties = {
           'is_end': False,
           'is_start': False,
-          'node_id': n1.strip ()
+          'node_id': int (n1.strip ())
           }
         )
 
         node02 = Node (
+          node_id = int (n2.strip ()),
           label = 'node',
           properties = {
             'is_end': p.strip () == 'end',
             'is_start': p.strip () == 'start',
-            'node_id': n2.strip ()
+            'node_id': int (n2.strip ())
           }
         )
 
