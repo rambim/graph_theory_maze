@@ -3,8 +3,8 @@ services:
     image: redislabs/redisgraph:2.12.9
     networks:
       - gtm-network
-    expose:
-      - "6379"
+    ports:
+      - "6379:6379"
     
   api:
     build: .
