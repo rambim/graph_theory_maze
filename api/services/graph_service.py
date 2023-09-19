@@ -31,12 +31,6 @@ class GraphService:
     node: Node = self.graph_repository.get_node_by_node_number (actual_position_number, maze_id)
     neighbors_list: list [int] = self.__get_neighbors_list (maze_id, node.properties ['node_id'])
 
-    print (type (node.properties ['is_start']))
-    print (node.properties ['is_start'])
-    
-    print (type (node.properties ['is_end']))
-    print (node.properties ['is_end'])
-
     return Position (
       pos_atual = actual_position_number,
       inicio = node.properties ['is_start'],
