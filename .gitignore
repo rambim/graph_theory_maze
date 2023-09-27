@@ -179,9 +179,10 @@ cython_debug/
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+
 commands.txt
 requests.http
 
-certs
-*.pem
-*.key
+traefik/certs/*.pem
+traefik/certs/*.key
+traefik/configs/users_file
