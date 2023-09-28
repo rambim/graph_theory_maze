@@ -1,11 +1,7 @@
 version: '3'
-
 services:
   traefik:
     image: traefik:v2.10
-    command:
-      - --api.insecure=true
-
     ports:
       - "80:80"
       - "443:443"
@@ -14,16 +10,18 @@ services:
       - gtm-network
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.yaml:/etc/traefik/traefik.yaml
-      - ./traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
-      - ./cert.pem:/etc/traefik/pki/cert.pem
-      - ./privkey.key:/etc/traefik/pki/privkey.key
+      - ./traefik/configs/traefik.yaml:/etc/traefik/traefik.yaml
+      - ./traefik/configs/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
+
   redis:
     image: redislabs/redisgraph:2.12.9
     networks:
       - gtm-network
     ports:
       - "6379:6379"
+    labels:
+      - traefik.enable=false
+
   api:
     build: .
     ports:
@@ -32,10 +30,7 @@ services:
       - gtm-network
     environment:
       - GTM_REDIS_HOST=redis
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.gtmrouter.rule=Host(`gtm.delary.dev`)||Host(`delary.dev`)
-      - traefik.http.routers.gtmrouter.tls=true
+
 networks:
   gtm-network:
     name: gtm-network

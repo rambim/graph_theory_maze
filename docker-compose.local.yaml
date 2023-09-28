@@ -1,0 +1,10 @@
+services:
+  traefik:
+    labels:
+      - traefik.http.routers.dashboard.rule=Host(`dashboard.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.dashboard.tls=false
+
+  api:
+    labels:
+      - traefik.http.routers.gtmrouter.rule=Host(`gtm.localhost`)
+      - traefik.http.routers.gtmrouter.tls=false

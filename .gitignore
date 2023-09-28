@@ -183,6 +183,6 @@ cython_debug/
 commands.txt
 requests.http
 
-traefik/certs/*.pem
-traefik/certs/*.key
+traefik/pki/*.pem
+traefik/pki/*.key
 traefik/configs/users_file
