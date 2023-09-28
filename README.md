@@ -10,16 +10,17 @@ Documentação:
 
 ## Sumário
 
-- [🎯 Objetivo](#-Objetivo)
-- [📝 Descrição](#-Descrição)
-- [👀 Entendimento do Labirinto](#-Entendimento-do-Labirinto)
-- [📍 Busca do Caminho](#-Busca-do-Caminho)
-- [✅ Validação do Caminho](#-Validação-do-Caminho)
-- [👩‍🏫 Apresentação](#-Apresentação)
-- [🦄 Avaliação](#-Avaliação)
-- [🤩 Dicas](#-Dicas)
-- [🏗️ Como Rodar o Projeto Localmente?](#-Como-Rodar-o-Projeto-Localmente?)
-- [🚀 Como Rodar o Projeto em Produção?](#-Como-Rodar-o-Projeto-em-Produção?)
+- [🎯 Objetivo](#-objetivo)
+- [📝 Descrição](#-descrição)
+- [📝 Instruções](#instruções)
+  - [👀 Entendimento do Labirinto](#-entendimento-do-labirinto)
+  - [📍 Busca do Caminho](#-busca-do-caminho)
+  - [✅ Validação do Caminho](#-validação-do-caminho)
+  - [👩‍🏫 Apresentação](#-apresentação)
+  - [🦄 Avaliação](#-avaliação)
+  - [🤩 Dicas](#-dicas)
+- [🏗️ Como Rodar o Projeto Localmente?](#-como-rodar-o-projeto-localmente)
+- [🚀 Como Rodar o Projeto em Produção?](#-como-rodar-o-projeto-em-produção)
 
 
 ## 🎯 Objetivo
@@ -136,7 +137,7 @@ Organize bem seu código, separando responsabilidades e documentando as funçõe
 Não esqueça de tratar possíveis erros que podem surgir durante as chamadas da API.
 
 
-# 🏗️ Como Rodar o Projeto Localmente?
+# 🏗️ Como rodar o projeto localmente?
 
 ## 🐳 Docker-Compose
 
@@ -168,7 +169,7 @@ Este projeto utiliza o Python 3.11.
 
 A API estará disponível em (localhost:8080/) e a documentação pode ser consultada em (localhost:8080/docs) e (localhost:8080/redoc).
 
-# 🚀 Como Rodar o Projeto em Produção?
+# 🚀 Como rodar o projeto em produção?
 
 Antes de efetuar deploy em produção, é necessário adquirir certificado para que a comunicação com a API seja feita tanto em HTTP e HTTPS, principalmente para exposição das documentações (Swagger e Redoc), pois, a depender do domínio, só é possível acessá-lo no *browser* via HTTPS.
 
