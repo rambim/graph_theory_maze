@@ -10,16 +10,16 @@ Documentação:
 
 ## Sumário
 
-- [🎯 Objetivo](#🎯-Objetivo)
-- [📝 Descrição](# 📝 Descrição)
-- [👀 Entendimento do Labirinto](#👀-Entendimento-do-Labirinto)
-- [📍 Busca do Caminho](#📍-Busca-do-Caminho)
-- [✅ Validação do Caminho](#✅-Validação-do-Caminho)
-- [👩‍🏫 Apresentação](#👩‍🏫-Apresentação)
-- [🦄 Avaliação](#🦄-Avaliação)
-- [🤩 Dicas](#🤩-Dicas)
-- [🏗️ Como Rodar o Projeto Localmente?](#🏗️-Como-Rodar-o-Projeto-Localmente?)
-- [🚀 Como Rodar o Projeto em Produção?](#🚀-Como-Rodar-o-Projeto-em-Produção?)
+- [🎯 Objetivo](#-Objetivo)
+- [📝 Descrição](#-Descrição)
+- [👀 Entendimento do Labirinto](#-Entendimento-do-Labirinto)
+- [📍 Busca do Caminho](#-Busca-do-Caminho)
+- [✅ Validação do Caminho](#-Validação-do-Caminho)
+- [👩‍🏫 Apresentação](#-Apresentação)
+- [🦄 Avaliação](#-Avaliação)
+- [🤩 Dicas](#-Dicas)
+- [🏗️ Como Rodar o Projeto Localmente?](#-Como-Rodar-o-Projeto-Localmente?)
+- [🚀 Como Rodar o Projeto em Produção?](#-Como-Rodar-o-Projeto-em-Produção?)
 
 
 ## 🎯 Objetivo
