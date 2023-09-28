@@ -2,11 +2,11 @@
 
 ## 📃 Trabalho: Desvendando o Labirinto usando API
 
-API disonível em `http://gtm.delary.dev/`
+API disonível em `https://gtm.delary.dev/`
 
 Documentação:
-  - [Swagger](gtm.delary.dev/docs/)
-  - [Redoc](gtm.delary.dev/redoc/)
+  - [Swagger](https://gtm.delary.dev/docs/)
+  - [Redoc](https://gtm.delary.dev/redoc/)
 
 ## Sumário
 
