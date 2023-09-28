@@ -181,3 +181,7 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
 commands.txt
 requests.http
+
+certs
+*.pem
+*.key
