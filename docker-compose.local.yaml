@@ -2,7 +2,8 @@ services:
   traefik:
     labels:
       - traefik.http.routers.dashboard.rule=Host(`dashboard.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-      - traefik.http.routers.dashboard.tls=false
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls={}
 
   api:
     labels:

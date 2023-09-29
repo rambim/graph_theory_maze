@@ -147,7 +147,7 @@ Não esqueça de tratar possíveis erros que podem surgir durante as chamadas da
 2. Entre na pasta do repositório que acabou de clonar: `cd graph_theory_maze`
 3. Execute o comando: `docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up`
 
-A API estará disponível em (localhost/) e a documentação pode ser consultada em (localhost/docs) e (localhost/redoc).
+A API estará disponível em http://gtm.localhost/ e a documentação pode ser consultada em http://gtm.localhost/docs/ e http://gtm.localhost/redoc/.
 
 ## 🐍 Python
 
@@ -193,13 +193,17 @@ Agora basta utilizar o `Docker Compose` para subir a aplicação utilizando o ya
 
 # 📐 Variáveis de Ambiente
 
-## Variáveis de Deploy (não podem ser alteradas no arquvo yaml do docker compose, devem estar setadas no ambiente em tempo de deploy da aplicação)
+## Variáveis de Deploy
+
+Obs: Não podem ser alteradas no arquvo yaml do docker compose, devem estar setadas no ambiente em tempo de deploy da aplicação.
 
 - `GTM_BASE_DOMAIN`: Domínio base da aplicação, exemplo: `delary.dev`.
 - `GTM_DASH_SUBDOMAIN`: Subdomínio do Dashboard no Traefik, exemplo: `dashboard`.
 - `GTM_API_SUBDOMAIN`: Subdomínio da aplicação em si, exemplo: `gtm` (assim como a API disponível, `gtm.delary.dev`).
 
-## Variáveis da Aplicação (podem ser alteradas no arquivo yaml do docker compose, na seção `environment`)
+## Variáveis da Aplicação
+
+Obs: Podem ser alteradas no arquivo yaml do docker compose, na seção `environment`.
 
 - `GTM_REDIS_HOST`: Host do Redis. Exemplo: `localhost` ou `127.0.0.1`.
 - `GTM_REDIS_PORT`: Port do Redis. Exemplo: `6379`.
