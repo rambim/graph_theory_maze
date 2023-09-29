@@ -19,16 +19,17 @@ class ISessionRepository (ABC):
   def update_actual_node (self, session_id: str, maze_id: str, new_position: int) -> int:
     raise NotImplemented ()
 
+  @abstractmethod
+  def get_session_by_id (self, session_id: str) -> dict:
+    raise NotImplemented ()
 
 class RedisSessionRespositoryImpl (ISessionRepository):
 
   def __init__ (self, redis_client: Redis = Depends (get_redis_client)):
     self.redis_client = redis_client
 
-  def get_session_by_id (self, session_id: str, maze_id: str) -> dict:
-    return self.redis_client.hgetall (
-      session_id + maze_id
-    )
+  def get_session_by_id (self, session_id: str) -> dict:
+    return self.redis_client.hgetall (session_id)
 
   def update_actual_node (self, session_id: str, maze_id: str, new_position: int) -> int:
     key = session_id + maze_id

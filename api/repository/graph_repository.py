@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from fastapi import Depends
 from redis import Redis
-from redisgraph import Node, Graph
+from redisgraph import Node, Graph, Path
 
 from api.schemas.position import Position
 from api.db.redis_client import get_redis_client
@@ -24,6 +24,13 @@ class IGraphRepository (ABC):
   def get_node_by_node_number (self, node_number: int, maze_id: str) -> Node:
     raise NotImplemented ()
 
+  @abstractmethod
+  def get_all_valid_paths (self, maze_id: str) -> list [list [int]]:
+    raise NotImplemented ()
+
+  @abstractmethod
+  def list_all_graphs (self) -> list [str]:
+    raise NotImplemented ()
 
 class RedisGraphRespoistoryImpl (IGraphRepository):
 
@@ -91,8 +98,18 @@ class RedisGraphRespoistoryImpl (IGraphRepository):
       params_graph_query
     )
 
-    print (result.result_set)
-
     node: Node = result.result_set [0][0]
 
     return node
+
+  def get_all_valid_paths (self, maze_id: str) -> list [list [int]]:
+    query = """MATCH (start:node {is_start: true}), (end:node {is_end: true}) WITH start, end MATCH paths = allShortestPaths ((start) -[*]- (end)) RETURN [node in nodes (paths) | node.node_id] as pathNodes"""
+
+    # query = """MATCH (start:node {is_start: true}), (end:node {is_end: true}) CALL algo.SPpaths ({sourceNode: start, targetNode: end, relTypes: ['connects'], relDirection: 'both', pathCount: 0}) YIELD path RETURN [node in nodes (path) | node.node_id] as pathNodes"""
+
+    maze = Graph (maze_id, self.redis_client)
+    result = maze.query (query)
+
+    paths = [sorted (result [0]) for result in result.result_set]
+
+    return paths
