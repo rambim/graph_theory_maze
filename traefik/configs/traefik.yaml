@@ -1,16 +1,10 @@
 entryPoints:
   web:
     address: ":80"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
   websecure:
     address: ":443"
 
 api:
-  insecure: true
   dashboard: true
 
 providers:

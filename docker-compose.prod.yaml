@@ -1,0 +1,15 @@
+services:
+  traefik:
+    volumes:
+      - ./traefik/configs/users_file:/etc/traefik/users_file
+      - ./traefik/pki/cert.pem:/etc/traefik/pki/cert.pem
+      - ./traefik/pki/privkey.key:/etc/traefik/pki/privkey.key
+    labels:
+      - traefik.http.routers.dashboard.rule=Host(`${GTM_DASH_SUBDOMAIN}.${GTM_BASE_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls=true
+
+  api:
+    labels:
+      - traefik.http.routers.gtmrouter.rule=Host(`${GTM_API_SUBDOMAIN}.${GTM_BASE_DOMAIN}`)
+      - traefik.http.routers.gtmrouter.tls=true
