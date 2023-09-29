@@ -21,7 +21,7 @@ Documentação:
   - [🤩 Dicas](#-dicas)
 - [🏗️ Como Rodar o Projeto Localmente?](#-como-rodar-o-projeto-localmente)
 - [🚀 Como Rodar o Projeto em Produção?](#-como-rodar-o-projeto-em-produção)
-
+- [📐 Variáveis de Ambiente](#-variáveis-de-ambiente)
 
 ## 🎯 Objetivo
 
@@ -183,10 +183,24 @@ Após obter os certificados de forma manual, eles devem estar em `./traefik/pki`
 O próximo passo é configurar as variáveis de ambiente antes de subir a aplicação:
   - `GTM_DASH_SUBDOMAIN`: Subdomínio do Dashboard do Traefik, exemplo: `dashboard`
   - `GTM_API_SUBDOMAIN`: Subdomínio da aplicação em si, exemplo: `gtm`
-  - `GTM_BASE_DOMAIN`: Domínio da base da aplicação, exemplo: `delary.dev`
+  - `GTM_BASE_DOMAIN`: Domínio base da aplicação, exemplo: `delary.dev`
 
 ⚠️ Atenção para os subdominíos, pois não podem possuir mais de 1 nível, ou seja, não podem ser `nivel2.nivel1` ou `dashboard.gtm`.
 
 ⚠️ Lembre-se que o certificado deve ser um certificado wildcard para ser possível acessar o dashboard e documentação da aplicação pelo *browser*.
 
 Agora basta utilizar o `Docker Compose` para subir a aplicação utilizando o yaml de produção: `docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up`.
+
+# 📐 Variáveis de Ambiente
+
+## Variáveis de Deploy (não podem ser alteradas no arquvo yaml do docker compose, devem estar setadas no ambiente em tempo de deploy da aplicação)
+
+- `GTM_BASE_DOMAIN`: Domínio base da aplicação, exemplo: `delary.dev`.
+- `GTM_DASH_SUBDOMAIN`: Subdomínio do Dashboard no Traefik, exemplo: `dashboard`.
+- `GTM_API_SUBDOMAIN`: Subdomínio da aplicação em si, exemplo: `gtm` (assim como a API disponível, `gtm.delary.dev`).
+
+## Variáveis da Aplicação (podem ser alteradas no arquivo yaml do docker compose, na seção `environment`)
+
+- `GTM_REDIS_HOST`: Host do Redis. Exemplo: `localhost` ou `127.0.0.1`.
+- `GTM_REDIS_PORT`: Port do Redis. Exemplo: `6379`.
+- `GTM_SESSION_TTL`: Tempo em segundos que a sessão do usuário fica salva no Redis. Valor padrão `300` (5 minutos).
