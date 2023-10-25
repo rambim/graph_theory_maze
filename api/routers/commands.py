@@ -26,6 +26,7 @@ async def start_maze (
 
 @command_routes.get ("/labirintos")
 async def list_mazes (graph_service: GraphService = Depends (GraphService)) -> list [str]:
+  print("oi labirintos")
   return graph_service.list_all_mazes ()
 
 
@@ -64,8 +65,55 @@ async def validate_path (
   graph_service.verify_maze_exists (validate_path_command.labirinto)
   session_service.verify_session_exists (validate_path_command.id + validate_path_command.labirinto)
 
-  is_path_valid: bool = graph_service.validate_path (validate_path_command.labirinto, sorted (validate_path_command.todos_movimentos))
-  moves_count: int = len (validate_path_command.todos_movimentos)
+  is_path_valid = True
+
+  # Save current position before validation
+  original_position = session_service.get_actual_position_number_by_session_id(
+    validate_path_command.id,
+    validate_path_command.labirinto
+  )
+
+  # Move to start position without creating a new session
+  first_move = validate_path_command.todos_movimentos.pop(0)
+  last_move = validate_path_command.todos_movimentos.pop()
+  start_node = graph_service.get_start_position(validate_path_command.labirinto)
+  
+  if first_move != start_node.pos_atual:
+    is_path_valid = False
+  else:
+    move_command = MoveCommand(
+      id=validate_path_command.id,
+      labirinto=validate_path_command.labirinto,
+      nova_posicao=first_move
+    )
+    session_service.update_session_actual_position(
+      move_command.id,
+      move_command.labirinto,
+      move_command.nova_posicao
+    )
+
+    try:
+      for position in validate_path_command.todos_movimentos:
+        move_command.nova_posicao = position
+        await move(move_command, session_service, graph_service)
+
+      move_command.nova_posicao = last_move
+      last_node = await move(move_command, session_service, graph_service)
+      if last_node.final is False:
+        is_path_valid = False
+
+    except HTTPException:
+      is_path_valid = False
+
+  # Return to original position before validation
+  session_service.update_session_actual_position(
+    validate_path_command.id,
+    validate_path_command.labirinto,
+    original_position
+  )
+  
+  # +2 -> Add first and last move back to total
+  moves_count: int = len (validate_path_command.todos_movimentos) + 2
 
   return ValidatePathResponse (caminho_valido = is_path_valid, quantidade_movimentos = moves_count)
 
