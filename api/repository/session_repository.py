@@ -12,7 +12,7 @@ class ISessionRepository (ABC):
     raise NotImplemented ()
 
   @abstractmethod
-  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int) -> str:
+  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int, final_position: int) -> str:
     raise NotImplemented ()
 
   @abstractmethod
@@ -45,13 +45,14 @@ class RedisSessionRespositoryImpl (ISessionRepository):
       key = 'actual_position'
     ))
 
-  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int) -> str:
+  def create_session (self, session_id: str, maze_id: str, session_ttl: int, actual_position: int, final_position: int) -> str:
     key: str = session_id + maze_id
 
     self.redis_client.hset (
       name = key,
       mapping = {
-        'actual_position': actual_position
+        'actual_position': actual_position,
+        'final_position': final_position
       }
     )
 

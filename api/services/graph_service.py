@@ -1,3 +1,4 @@
+import random
 from fastapi import Depends, HTTPException
 from redisgraph import Node
 
@@ -76,3 +77,20 @@ class GraphService:
     paths: list [list [int]] = self.graph_repository.get_all_valid_paths (maze_id)
 
     return True if moves in paths else False
+  
+  def set_final_position(self, maze_id: str, final_position: int) -> int:
+    all_nodes = self.graph_repository.get_all_nodes(maze_id)
+    start_position = self.get_start_position(maze_id)
+
+    if final_position == 0:
+      # Random position
+      while True:
+        random_position = random.choice(all_nodes)
+        if random_position != start_position.pos_atual:
+          return random_position
+
+    # Check whether final position is valid
+    if (final_position in all_nodes) and (final_position != start_position.pos_atual):
+      return final_position
+    else:
+      raise HTTPException(status_code = 403, detail = "Posição final inválida!")

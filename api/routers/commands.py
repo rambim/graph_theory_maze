@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from api.schemas.command import StartCommand, MoveCommand, ValidatePathCommand
+from api.schemas.command import StartCommand, StartCustomCommand, MoveCommand, ValidatePathCommand
 from api.schemas.position import Position
 from api.schemas.validate_path_response import ValidatePathResponse
 from api.services.graph_service import GraphService
@@ -16,17 +16,31 @@ async def start_maze (
   ) -> Position:
 
   graph_service.verify_maze_exists (start_command.labirinto)
-  session_service.create_session (start_command.id, start_command.labirinto)
+  session_service.create_session (start_command.id, start_command.labirinto, -1)
 
   start_position = graph_service.get_start_position (start_command.labirinto)
 
   return start_position
 
 
+@command_routes.post("/iniciar_custom")
+async def start_maze_custom(
+  start_custom_command: StartCustomCommand,
+  session_service: SessionService = Depends (SessionService),
+  graph_service: GraphService = Depends (GraphService)
+) -> Position:
+  
+  graph_service.verify_maze_exists (start_custom_command.labirinto)
+  final_pos = graph_service.set_final_position(start_custom_command.labirinto, start_custom_command.pos_final)
+  session_service.create_session(start_custom_command.id, start_custom_command.labirinto, final_pos)
+
+  start_position = graph_service.get_start_position(start_custom_command.labirinto) 
+
+  return start_position
+
 
 @command_routes.get ("/labirintos")
 async def list_mazes (graph_service: GraphService = Depends (GraphService)) -> list [str]:
-  print("oi labirintos")
   return graph_service.list_all_mazes ()
 
 
@@ -51,8 +65,25 @@ async def move (
   actual_position_number: int = session_service.get_actual_position_number_by_session_id (move_command.id, move_command.labirinto)
   position = graph_service.get_actual_position (actual_position_number, move_command.labirinto)
 
-  return position
+  # Replace information returned from graph with custom final postiion
+  custom_final_pos = session_service.get_final_position_number_by_session_id(move_command.id, move_command.labirinto)
 
+  # Final node was not changed -> Return early
+  if custom_final_pos == -1:
+    return position
+
+  # New node is the custom final node -> final = True
+  if position.pos_atual == custom_final_pos:
+    position.final = True
+    return position
+
+  # New node is the original final node -> final = False
+  if position.final is True:
+    position.final = False
+    return position
+  
+  # New node is neither the original final node or custom final node -> Do nothing
+  return position
 
 
 @command_routes.post ("/validar_caminho")

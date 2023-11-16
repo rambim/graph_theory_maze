@@ -57,6 +57,31 @@ Permite ao usuário iniciar a exploração do labirinto.
 }
 ```
 
+### /iniciar_custom:
+
+Inicia a exploração do labirinto com uma posição final customizada. Caso a posição final seja definida como 0, a API irá escolher uma posição aleatória como final.
+
+#### Requisição:
+
+```json
+{
+  "id": "usuario",
+  "labirinto": "nome_do_labirinto",
+  "pos_final": 4
+}
+```
+
+#### Resposta:
+
+```json
+{
+    "pos_atual": 5,
+    "inicio": true,
+    "final": false,
+    "movimentos": [4, 6]
+}
+```
+
 
 ### /movimentar:
 
@@ -83,7 +108,7 @@ Permite ao usuário se mover pelo labirinto.
 }
 ```
 
-### /valida_caminho:
+### /validar_caminho:
 
 Valida se a sequência de movimentos fornecida é um caminho válido no labirinto.
 
@@ -118,7 +143,7 @@ Após entender a estrutura do labirinto, desenvolva um algoritmo que encontre o 
 
 ### ✅ Validação do Caminho
 
-Use o endpoint **/valida_caminho** para confirmar se o caminho encontrado é válido.
+Use o endpoint **/validar_caminho** para confirmar se o caminho encontrado é válido.
 
 ### 👩‍🏫 Apresentação
 
