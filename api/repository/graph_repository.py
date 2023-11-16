@@ -31,6 +31,10 @@ class IGraphRepository (ABC):
   @abstractmethod
   def list_all_graphs (self) -> list [str]:
     raise NotImplemented ()
+  
+  @abstractmethod
+  def get_all_nodes (self, maze_id: str) -> list[int]:
+    raise NotImplemented ()
 
 class RedisGraphRespoistoryImpl (IGraphRepository):
 
@@ -113,3 +117,11 @@ class RedisGraphRespoistoryImpl (IGraphRepository):
     paths = [sorted (result [0]) for result in result.result_set]
 
     return paths
+  
+  def get_all_nodes(self, maze_id: str) -> list[int]:
+    query = "MATCH (n) RETURN n"
+
+    maze = Graph(maze_id, self.redis_client)
+    result = maze.query(query)
+
+    return [x[0].properties.get("node_id") for x in result.result_set]

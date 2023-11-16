@@ -7,6 +7,9 @@ class Command (BaseModel):
 class StartCommand (Command):
   pass
 
+class StartCustomCommand (StartCommand):
+  pos_final: int
+
 class MoveCommand (Command):
   nova_posicao: int
 
